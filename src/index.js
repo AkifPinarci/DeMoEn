@@ -2,6 +2,7 @@ const express = require("express");
 const { MongoClient, ServerApiVersion } = require("mongodb");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const wordRoutes = require("./routes/wordRoutes");
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -18,6 +19,9 @@ const connectDB = async () => {
     process.exit(1);
   }
 };
+
+app.use("/api/words", wordRoutes);
+
 // const client = new MongoClient(process.env.MONGO_URI, {
 //   serverApi: {
 //     version: ServerApiVersion.v1,
@@ -42,3 +46,8 @@ const connectDB = async () => {
 // run().catch(console.dir);
 
 connectDB();
+
+const port = process.env.PORT || 5000;
+const server = app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});

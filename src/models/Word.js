@@ -13,12 +13,7 @@ const wordSchema = new mongoose.Schema({
     level:{
         type: String,
         required: true,
-    },
-    example:{
-        type: String,
-        required: true,
-    },
-
+    }
 });
 
 const Word = mongoose.model('Word', wordSchema);
