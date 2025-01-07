@@ -7,7 +7,7 @@ const addWord = async (req, res) => {
     await newWord.save();
     res.status(201).json(newWord);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(500).json(error);
   }
 };
 

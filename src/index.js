@@ -3,6 +3,7 @@ const { MongoClient, ServerApiVersion } = require("mongodb");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const wordRoutes = require("./routes/wordRoutes");
+const movieRoutes = require("./routes/movieRoutes");
 dotenv.config();
 const app = express();
 app.use(express.json());
@@ -21,7 +22,7 @@ const connectDB = async () => {
 };
 
 app.use("/api/words", wordRoutes);
-
+app.use("/api/movies", movieRoutes);
 // const client = new MongoClient(process.env.MONGO_URI, {
 //   serverApi: {
 //     version: ServerApiVersion.v1,
