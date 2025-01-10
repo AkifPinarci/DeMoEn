@@ -4,9 +4,19 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const wordRoutes = require("./routes/wordRoutes");
 const movieRoutes = require("./routes/movieRoutes");
-dotenv.config();
+const bodyParser = require("body-parser");
+
 const app = express();
-app.use(express.json());
+dotenv.config();
+
+// Increase the payload size limit to 50MB
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: false,
+  })
+);
 
 const connectDB = async () => {
   try {
@@ -23,6 +33,14 @@ const connectDB = async () => {
 
 app.use("/api/words", wordRoutes);
 app.use("/api/movies", movieRoutes);
+
+connectDB();
+
+const port = process.env.PORT || 5000;
+const server = app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+
 // const client = new MongoClient(process.env.MONGO_URI, {
 //   serverApi: {
 //     version: ServerApiVersion.v1,
@@ -45,10 +63,3 @@ app.use("/api/movies", movieRoutes);
 //   }
 // }
 // run().catch(console.dir);
-
-connectDB();
-
-const port = process.env.PORT || 5000;
-const server = app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
