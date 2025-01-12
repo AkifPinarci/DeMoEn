@@ -1,8 +1,8 @@
 const Movie = require("../models/Movie");
-const oneMovie = require("../../data/movieSubTitle/4_Minutes_2006_DVDRip.srt.json");
+
 const addMovie = async (req, res) => {
   try {
-    const { title, difficulty, language, subtitle } = oneMovie;
+    const { title, difficulty, language, subtitle } = req.body;
     console.log(title);
     const movie = new Movie({ title, difficulty, language, subtitle });
     await movie.save();
