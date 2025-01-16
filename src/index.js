@@ -9,14 +9,8 @@ const bodyParser = require("body-parser");
 const app = express();
 dotenv.config();
 
-// Increase the payload size limit to 50MB
-app.use(bodyParser.json({ limit: "50mb" }));
-app.use(
-  bodyParser.urlencoded({
-    limit: "50mb",
-    extended: false,
-  })
-);
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
 const connectDB = async () => {
   try {

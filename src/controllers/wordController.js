@@ -11,6 +11,16 @@ const addWord = async (req, res) => {
   }
 };
 
+const addWords = async (req, res) => {
+  try {
+    const words = req.body.words;
+    const newWords = await Word.insertMany(words);
+    res.status(201).json(newWords);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+};
+
 const getWordByWord = async (req, res) => {
   const word = req.params.word;
   try {
@@ -41,4 +51,4 @@ const getWordsByLevel = async (req, res) => {
   }
 };
 
-module.exports = { addWord, getWordByWord, getWordsByLevel };
+module.exports = { addWord, getWordByWord, getWordsByLevel, addWords };

@@ -4,9 +4,11 @@ const {
   addWord,
   getWordByWord,
   getWordsByLevel,
+  addWords,
 } = require("../controllers/wordController");
 
-router.post("/block", addWord);
+router.post("/", addWord);
+router.post("/bulk", addWords);
 
 router.get("/:word", getWordByWord);
 
