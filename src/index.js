@@ -5,12 +5,17 @@ const dotenv = require("dotenv");
 const wordRoutes = require("./routes/wordRoutes");
 const movieRoutes = require("./routes/movieRoutes");
 const bodyParser = require("body-parser");
+const userRoutes = require("./routes/userRoutes");
+const morgan = require("morgan");
+const passport = require("passport");
+require("./config/passport")(passport);
 
 const app = express();
 dotenv.config();
 
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
+app.use(morgan("combined"));
 
 const connectDB = async () => {
   try {
@@ -27,7 +32,7 @@ const connectDB = async () => {
 
 app.use("/api/words", wordRoutes);
 app.use("/api/movies", movieRoutes);
-
+app.use("/api/users", userRoutes);
 connectDB();
 
 const port = process.env.PORT || 5000;
