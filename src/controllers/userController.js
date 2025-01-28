@@ -57,10 +57,40 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const addWordToKnownWords = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.known_words.push(req.body.word);
+    await user.save();
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const removeWordFromKnownWords = async (req, res) =>{
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    user.known_words = user.known_words.filter((word) => word !== req.body.word);
+    await user.save();
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 module.exports = {
   createUser,
   getUsers,
   getUserById,
   updateUser,
   deleteUser,
+  addWordToKnownWords,
+  removeWordFromKnownWords,
 };

@@ -7,6 +7,8 @@ const {
   getUserById,
   updateUser,
   deleteUser,
+  addWordToKnownWords,
+  removeWordFromKnownWords,
 } = require("../controllers/userController");
 const loginUser = require("../controllers/authController");
 const passport = require("passport");
@@ -55,6 +57,22 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   authorizeRole("admin"),
   deleteUser
+);
+
+// POST: Add Word to user's known words
+router.post(
+  "/:id/known_words",
+  passport.authenticate("jwt", { session: false }),
+  authorizeRole("user"),
+  addWordToKnownWords
+);
+
+// DELETE: Remove Word from user's known words
+router.delete(
+  "/:id/known_words",
+  passport.authenticate("jwt", { session: false }),
+  authorizeRole("user"),
+  removeWordFromKnownWords
 );
 
 router.post("/login", loginUser);
