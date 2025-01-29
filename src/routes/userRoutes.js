@@ -9,6 +9,8 @@ const {
   deleteUser,
   addWordToKnownWords,
   removeWordFromKnownWords,
+  addWordToLearningWords,
+  removeWordFromLearningWords,
 } = require("../controllers/userController");
 const loginUser = require("../controllers/authController");
 const passport = require("passport");
@@ -73,6 +75,22 @@ router.delete(
   passport.authenticate("jwt", { session: false }),
   authorizeRole("user"),
   removeWordFromKnownWords
+);
+
+// Post: Add Word to user's learning words
+router.post(
+  "/:id/learning_words",
+  passport.authenticate("jwt", { session: false }),
+  authorizeRole("user"),
+  addWordToLearningWords
+);
+
+// DELETE: Remove Word from user's learning words
+router.delete(
+  "/:id/learning_words",
+  passport.authenticate("jwt", { session: false }),
+  authorizeRole("user"),
+  removeWordFromLearningWords
 );
 
 router.post("/login", loginUser);
