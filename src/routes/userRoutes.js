@@ -65,7 +65,6 @@ router.delete(
 router.post(
   "/:id/known_words",
   passport.authenticate("jwt", { session: false }),
-  authorizeRole("user"),
   addWordToKnownWords
 );
 
