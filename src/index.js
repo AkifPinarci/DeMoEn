@@ -35,7 +35,7 @@ app.use("/api/movies", movieRoutes);
 app.use("/api/users", userRoutes);
 connectDB();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5050;
 const server = app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });

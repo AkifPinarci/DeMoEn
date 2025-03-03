@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Movie = require("../models/Movie");
 
 const createUser = async (req, res) => {
   try {
@@ -117,6 +118,40 @@ const removeWordFromLearningWords = async (req, res) => {
   }
 };
 
+const calculateKnownWordsFromMovie = async (req, res) => {
+  try {
+    const { userId, movieId } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const movie = await Movie.findById(movieId);
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    let knownWordsCount = 0;
+    let totalWordsCount = 0;
+
+    movie.subtitle.forEach((wordObj) => {
+      totalWordsCount += wordObj.count;
+      if (user.known_words.includes(wordObj.word)) {
+        knownWordsCount += wordObj.count;
+      }
+    });
+
+    const knownWordsPercentage = (knownWordsCount / totalWordsCount) * 100;
+
+    res
+      .status(200)
+      .json({ knownWordsCount, totalWordsCount, knownWordsPercentage });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports = {
   createUser,
   getUsers,
@@ -127,4 +162,5 @@ module.exports = {
   removeWordFromKnownWords,
   addWordToLearningWords,
   removeWordFromLearningWords,
+  calculateKnownWordsFromMovie, // Add the new function to the exports
 };

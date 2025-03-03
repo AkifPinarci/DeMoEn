@@ -11,6 +11,7 @@ const {
   removeWordFromKnownWords,
   addWordToLearningWords,
   removeWordFromLearningWords,
+  calculateKnownWordsFromMovie,
 } = require("../controllers/userController");
 const loginUser = require("../controllers/authController");
 const passport = require("passport");
@@ -65,6 +66,7 @@ router.delete(
 router.post(
   "/:id/known_words",
   passport.authenticate("jwt", { session: false }),
+  authorizeRole("user"),
   addWordToKnownWords
 );
 
@@ -91,6 +93,9 @@ router.delete(
   authorizeRole("user"),
   removeWordFromLearningWords
 );
+
+// Add the new route
+router.post("/calculate-known-words", calculateKnownWordsFromMovie);
 
 router.post("/login", loginUser);
 
