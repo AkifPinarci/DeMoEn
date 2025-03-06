@@ -95,7 +95,7 @@ router.delete(
 );
 
 // Add the new route
-router.post("/calculate-known-words", calculateKnownWordsFromMovie);
+router.post("/calculate_known_words", calculateKnownWordsFromMovie);
 
 router.post("/login", loginUser);
 
